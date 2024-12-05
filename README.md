@@ -1,6 +1,6 @@
-# Credit Decision Reprocessing Tool
+# K6 Sequential
 
-Este repositório é responsável por enviar mensagens para o tópico Kafka `credit_decision_multiplier`. Para utilizar este script, basta inserir as informações necessárias no arquivo CSV e seguir os passos abaixo para configurar o ambiente e executar o envio das mensagens para o tópico.
+Este repositório é responsável por enviar mensagens para uma api de forma sequencial, sem duplicidade e em alta performance usando o k6. Para utilizar este script, basta inserir as informações necessárias no arquivo CSV e seguir os passos abaixo para configurar o ambiente e executar o envio das mensagens para o tópico.
 
 ## Instalando o k6 
 
@@ -24,14 +24,10 @@ winget install k6 --source winget
 
 ## Scripts k6 e estrutura CSV
 
-- Para a execução do script ***k6_credit_decision_multiplier_clean*** a estrutura do CSV `decision_multiplier.csv` abaixo vai ser considerada: 
-`````
-document, productId, subProductId, contractNumber, maxAmountLimitClean
-`````
 
-- Para a execução do script ***k6_credit_decision_multiplier*** a estrutura do CSV `decision_multiplier.csv` abaixo vai ser considerada: 
+- Para a execução do script ***k6_sequential_sender.js*** a estrutura do CSV `data.csv` abaixo a ser considerada: 
 `````
-document, productId, subProductId, contractNumber, maxAmountLimitClean, maxAmountLimitBonus, maxAmountLimitGuaranteed, multiplier, level
+"document","infoId","subInfoId","anyNumber","xValue","yValue","zValue","floatNumber","string"
 `````
 
 ## Performance
@@ -49,10 +45,5 @@ const numLines = 100000;
 ## Executando o script 
 
 `````
-k6 run k6_credit_decision_multiplier_qa.js
-`````
-ou 
-
-`````
-k6 run k6_credit_decision_multiplier_clean_qa.js
+k6 run k6_sequential_sender.js
 `````
