@@ -1,0 +1,20 @@
+# .github/workflows/scalequality.yml: the whole file, a workflow of its own
+name: ScaleQuality
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  scalequality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0   # full history: durability is measured with git blame
+      # Tests with coverage run here, before the check, so coverage is measured
+      - run: npx @scalequality/check@latest --token "$SQ_TOKEN" --project 92c26f6c-8ae9-4ac2-9933-eb9a7ffe0a3a --host https://app.scalequality.io
+        env:
+          SQ_TOKEN: ${{ secrets.SQ_TOKEN }}
